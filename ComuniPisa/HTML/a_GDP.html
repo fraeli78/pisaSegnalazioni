@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="it" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Quadro Conoscitivo</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Downloaded Version of Leaflet - https://leafletjs.com/download.html -->
+    <!-- leaflet.css -->
+    <link rel="stylesheet" href="../css/leaflet.css" />
+    <!-- css -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/plugins/leaflet-sidebar.css" />
+    <link rel="stylesheet" href="../css/plugins/L.Control.ZoomBar.css" />
+    <link rel="stylesheet" href="../css/plugins/L.Control.Locate.css" />
+    <link rel="stylesheet" href="../css/plugins/leaflet.fullscreen.css" />
+    <link rel="stylesheet" href="../css/plugins/leaflet.awesome-markers.css" />
+    <!-- <link rel="stylesheet" href="css/plugins/leaflet.draw.css" /> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css"/>
+  
+    <!-- bootstrap 4.3.1 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- ionicon stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css">
+      
+    <!-- leaflet.js -->
+    <script src="../js/base/leaflet.js"></script>
+
+    
+    <!-- jquery 3.4.1 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- popper.js 1.14.7 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <!-- bootstrap 3.4.1 -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- turf@5 -->
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js"></script>
+    <!-- bootstrap-->
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+    <!-- leaflet-ajax -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.js"></script>
+    <!-- data -->
+    <script src="../data/montopoli_wgs84.js"></script>    
+    <script src="../data/usoSuolo_25k_0.js"></script>
+	<style>
+        #map {
+            height: 700px;
+            width: 100%;
+            border: solid 2px black;
+        }
+
+		.info {
+			padding: 6px 8px;
+			font: 14px/16px Arial, Helvetica, sans-serif;
+            color: white;
+/*			background: white;*/
+			background: rgba(0,0,0,0.8);
+			box-shadow: 0 0 15px rgba(0,0,0,0.2);
+			border-radius: 5px;
+            
+		}
+		.info h4 {
+			margin: 0 0 5px;
+			color: #ffffff;
+            letter-spacing: 2px;
+		}
+		.info h5 {
+			margin: 0 0 5px;
+/*            letter-spacing: 1px;*/
+			text-align: center;
+            text-decoration-style: solid;
+		}
+
+		.legend {
+			text-align: left;
+			line-height: 18px;
+			color: #ffffff;
+		}
+		.legend i {
+			width: 18px;
+			height: 18px;
+			float: left;
+			margin-right: 8px;
+			opacity: 0.9;
+		}
+	</style>
+
+  </head>
+  <body>
+<div class="container">   
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <!-- Brand/logo -->
+  <a class="navbar-brand" target="_blank" href="https://www.facebook.com/pontedera.europa/">
+    <img src="../css/images/icons/italiaViva.png" alt="logo" style="width:30px;">
+  </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <!-- Links -->
+    <ul class="navbar-nav mx-auto">
+      <li class="nav-item text-center">
+        <a class="nav-link" href="../index.html">Comuni</a>
+      </li>
+      <li class="nav-item text-center">
+        <a class="nav-link active text-center" href="a_GDP.html">Residenti</a>
+       </li>  
+      <li class="nav-item text-center">
+        <a class="nav-link" href="c_atlanteSegnalazioni.html">Segnalazioni</a>
+      </li>
+
+    </ul>
+  </div> 
+</nav>
+</div> 
+
+    <!-- optionally define the sidebar content via HTML markup -->
+
+    <!-- Begin page content -->
+    <main role="main" class="container" >
+        <h3 class="mt-5 text-center" >
+            Numero di Residenti per Comune - ISTAT 2019
+        </h3>
+        <br />
+<!--
+        <h6 class="mt-5 text-center">
+            I use two fields to compute the GDP per capita:<br>
+            GDP_MD_EST / POP_EST * 1000000
+        </h6>
+-->
+        <!-- Leafet MAP Containner -->
+        <div id="map" class="container"></div>
+
+    </main>
+
+    <!-- Plugins -->
+<!--    <script src="../js/plugins/sidebarV2/leaflet-sidebar.js"></script>-->
+<!--    <script src="../js/plugins/easyPrint/bundle.js"></script>-->
+<!--    <script src="../js/plugins/zoomControl/L.Control.ZoomBar.js"></script>-->
+    <script src="../js/plugins/leaflet-locatecontrol/L.Control.Locate.min.js"></script>
+    <script src="../js/plugins/fullScreen/Leaflet.fullscreen.js"></script>
+    <script src="../js/plugins/awesome-markers/leaflet.awesome-markers.js"></script>
+    <!-- <script src="/js/plugins/draw/Leaflet.draw.js"></script> -->
+    <!-- https://cdnjs.com/libraries/leaflet.draw -->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>-->
+            <script src="../data/pisaComuni.js"></script>
+
+    <script type="text/javascript">
+
+      var map = L.map('map', {
+        center: [43.47253,10.63541],
+        zoomControl: true,
+        zoom: 10,
+//        minZoom: 8,
+//        maxBounds: [
+//        [43.69704,10.61279],
+//        [43.63496,10.85655]
+//        ],
+        drawControl: true,
+//        scrollWheelZoom: false,
+//        doubleClickZoom: false,
+      // measureControl: true,
+        fullscreenControl: {
+          pseudoFullscreen: false
+        },
+
+      });
+
+    </script>
+       <!--a_quadroConoscitivo JS-->     
+        <script src="../js/a_quadroConoscitivo/layers.js"></script>
+<!--        <script src="../js/a_quadroConoscitivo/markers.js"></script>-->
+        <script src="../js/a_quadroConoscitivo/editableLayers.js"></script>
+<!--        <script src="../js/a_quadroConoscitivo/js/sidebar.js"></script>-->
+       <!--base JS-->
+        <script src="../js/base/scalebar.js"></script>
+<!--        <script src="../js/base/print.js"></script>-->
+<!--        <script src="../js/base/zoom.js"></script>-->
+<!--
+        <script src="../js/base/locateControl.js"></script>
+        <script src="../js/base/showCoordinates.js"></script>
+-->
+        <script src="../js/base/showUrl.js"></script>
+
+
+  </body>
+</html>

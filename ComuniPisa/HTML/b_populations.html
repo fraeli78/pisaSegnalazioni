@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="it" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Metropolitan centers</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Downloaded Version of Leaflet - https://leafletjs.com/download.html -->
+    <!-- leaflet.css -->
+    <link rel="stylesheet" href="../css/leaflet.css" />
+    <!-- css -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/style.css" />
+<!--    <link rel="stylesheet" href="../css/plugins/leaflet-sidebar.css" />-->
+    <link rel="stylesheet" href="../css/plugins/L.Control.ZoomBar.css" />
+    <link rel="stylesheet" href="../css/plugins/L.Control.Locate.css" />
+    <link rel="stylesheet" href="../css/plugins/leaflet.fullscreen.css" />
+    <link rel="stylesheet" href="../css/plugins/leaflet.awesome-markers.css" />
+    <!-- <link rel="stylesheet" href="css/plugins/leaflet.draw.css" /> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css"/>
+  
+    <!-- bootstrap 4.3.1 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- ionicon stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css">
+      
+    <!-- leaflet.js -->
+    <script src="../js/base/leaflet.js"></script>
+
+    
+    <!-- jquery 3.4.1 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- popper.js 1.14.7 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <!-- bootstrap 3.4.1 -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- leaflet-ajax -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.js"></script>
+    <!-- turf@5 -->
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js"></script>
+    <!-- bootstrap-->
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+
+    <!-- data -->
+      <style>
+        #map {
+            height: 700px;
+            width: 100%;
+            border: solid 2px black;
+        }
+        .legend {
+			text-align: left;
+			line-height: 18px;
+			color: #ffffff;
+		}
+		.legend i {
+			width: 16px;
+			height: 16px;
+            border-radius: 50%;
+			float: left;
+			margin-right: 8px;
+			opacity: 0.9;
+		}
+      </style>
+
+  </head>
+  <body>
+<div class="container">  
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <!-- Brand/logo -->
+  <a class="navbar-brand" target="_blank" href="https://filippomariaraeli.com/">
+    <img src="../css/images/icons/linkedin.png" alt="logo" style="width:30px;">
+  </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <!-- Links -->
+    <ul class="navbar-nav mx-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="../index.html">HOME</a>
+      </li>
+      <li class="nav-item text-center">
+        <a class="nav-link" href="a_GDP.html">GDP</a>
+      </li>
+      <li class="nav-item text-center">
+        <a class="nav-link active" href="b_populations.html">Populations</a>
+      </li>
+      <li class="nav-item text-center">
+        <a class="nav-link" href="c_atlanteSegnalazioni.html">Reporting atlas</a>
+      </li>
+    <!-- Dropdown -->
+    <li class="nav-item dropdown text-center">
+      <a class="nav-link dropdown-toggle" href="d_protezioneCivile.html" id="navbardrop" data-toggle="dropdown">
+        Civil Protection
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="#">PAI</a>
+        <a class="dropdown-item" href="#">Zone Sismiche</a>
+        <a class="dropdown-item" href="#">Frane</a>
+      </div>
+    </li>
+    <!-- Dropdown -->
+    <li class="nav-item dropdown text-center">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        Transportation
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="e_airports.html">Airports</a>
+        <a class="dropdown-item" href="e_ports.html">Ports</a>
+    <!--                <a class="dropdown-item" href="#">CAI</a>-->
+      </div>
+    </li>
+
+    </ul>
+  </div> 
+</nav>
+</div>
+
+    <!-- optionally define the sidebar content via HTML markup -->
+<!--    <div id="sidebar" class="leaflet-sidebar collapsed">-->
+
+        <!-- nav tabs -->
+<!--        <div class="leaflet-sidebar-tabs">-->
+            <!-- top aligned tabs -->
+<!--
+            <ul role="tablist">
+                <li><a href="#home" role="tab"><i class="fa fa-bars active"></i></a></li>
+-->
+<!--                <li><a href="#autopan" role="tab"><i class="fa fa-arrows"></i></a></li>-->
+<!--            </ul>-->
+
+            <!-- bottom aligned tabs -->
+<!--
+            <ul role="tablist">
+                 <li><a href="https://github.com/nickpeihl/leaflet-sidebar-v2"><i class="fa fa-github"></i></a></li> 
+            </ul>
+        </div>
+-->
+
+        <!-- panel content -->
+<!--
+        <div class="leaflet-sidebar-content">
+            <div class="leaflet-sidebar-pane" id="home">
+                <h1 class="leaflet-sidebar-header" id="sidebar-title">
+                    No state selected
+-->
+<!--                    <a href="https://www.naturalearthdata.com/downloads/" style="color: #ffffff" target="_blank">Info</a>-->
+                   
+<!--
+                    <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
+                </h1>
+-->
+<!--                <h2 id="sidebar-title">No state selected</h2>-->
+<!--
+                <p id="sidebar-content"></p>
+            </div>
+-->
+
+
+<!--
+            <div class="leaflet-sidebar-pane" id="messages">
+                <h1 class="leaflet-sidebar-header">Messages<span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+            </div>
+        </div>
+    </div>
+-->
+<!-- Begin page content -->
+<main role="main" class="container" >
+    <h4 class="mt-5 text-center" >
+        Metropolitan centers with populations greater than 10 million of the countries of the world.          
+    </h4>
+    <br />
+    <!-- Leafet MAP Containner -->
+    <div id="map" class="container"></div>
+
+</main>
+
+      
+    <!-- <button id="getZoomButton" onclick="getCenterAndZoom();">Get Center and Zoom</button> -->
+
+    <!-- Plugins -->
+<!--    <script src="../js/plugins/sidebarV2/leaflet-sidebar.js"></script>-->
+<!--    <script src="../js/plugins/easyPrint/bundle.js"></script>-->
+<!--
+    <script src="../js/plugins/zoomControl/L.Control.ZoomBar.js"></script>
+    <script src="../js/plugins/leaflet-locatecontrol/L.Control.Locate.min.js"></script>
+-->
+    <script src="../js/plugins/fullScreen/Leaflet.fullscreen.js"></script>
+    <script src="../js/plugins/awesome-markers/leaflet.awesome-markers.js"></script>
+    <!-- <script src="/js/plugins/draw/Leaflet.draw.js"></script> -->
+    <!-- https://cdnjs.com/libraries/leaflet.draw -->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>-->
+
+
+    <script type="text/javascript">
+
+      var map = L.map('map', {
+        center: [43.66160,10.77005],
+        zoomControl: false,
+        zoom: 2,
+//        minZoom: 8,
+        maxBounds: [
+        [43.57600,10.61142],
+        [43.74712,10.98976]
+        ],
+        drawControl: true,
+        noWrap: true,
+      // measureControl: true,
+        fullscreenControl: {
+          pseudoFullscreen: false
+        },
+      });
+
+
+
+    </script>
+       <!--b_Marketing Territoriale JS-->     
+        <script src="../js/b_marketingTerritoriale/layers.js"></script>
+<!--        <script src="../js/b_marketingTerritoriale/markers.js"></script>-->
+<!--        <script src="../js/b_marketingTerritoriale/editableLayers.js"></script>-->
+<!--        <script src="../js/b_marketingTerritoriale/js/sidebar.js"></script>-->
+       <!--base JS-->
+<!--        <script src="../js/base/scalebar.js"></script>-->
+<!--        <script src="../js/base/print.js"></script>-->
+<!--
+        <script src="../js/base/zoom.js"></script>
+        <script src="../js/base/locateControl.js"></script>
+        <script src="../js/base/showCoordinates.js"></script>
+        <script src="../js/base/showUrl.js"></script>
+-->
+
+
+  </body>
+</html>

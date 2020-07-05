@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="it" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Atlante Segnalazioni</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Downloaded Version of Leaflet - https://leafletjs.com/download.html -->
+    <!-- leaflet.css -->
+    <link rel="stylesheet" href="../css/leaflet.css" />
+    <!-- css -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/plugins/leaflet-sidebar.css" />
+    <link rel="stylesheet" href="../css/plugins/L.Control.ZoomBar.css" />
+    <link rel="stylesheet" href="../css/plugins/L.Control.Locate.css" />
+    <link rel="stylesheet" href="../css/plugins/leaflet.fullscreen.css" />
+    <link rel="stylesheet" href="../css/plugins/leaflet.awesome-markers.css" />
+    <!-- <link rel="stylesheet" href="css/plugins/leaflet.draw.css" /> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css"/>
+  
+    <!-- bootstrap 4.3.1 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- ionicon stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css">
+      
+    <!-- leaflet.js -->
+    <script src="../js/base/leaflet.js"></script>
+
+    
+    <!-- jquery 3.4.1 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- popper.js 1.14.7 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <!-- bootstrap 3.4.1 -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- turf@5 -->
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js"></script>
+    <!-- bootstrap-->
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+
+    <!--Location Plugin-->
+    <script src='https://cdn.jsdelivr.net/leaflet.locatecontrol/0.49.0/L.Control.Locate.min.js'></script>
+    <link href='https://cdn.jsdelivr.net/leaflet.locatecontrol/0.49.0/L.Control.Locate.css' rel='stylesheet' />
+    
+    <!--Tabletop and GeoJson-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.2/tabletop.min.js"></script>
+    <script src="../js/base/geojson.js"></script>
+      
+    <!-- data -->
+    <script src="../data/montopoli_wgs84.js"></script>
+      
+    <style>
+      *{font-family: 'Source Sans Pro', sans-serif;}
+      /* .map {height:70%}
+      #map {position:relative;height:500px;} */
+      .leaflet-popup-content {font-size: medium;}
+      .form-group{width:250px;margin-bottom:0;}
+      .form-control{resize:none;}
+      .text-muted{font-size:smaller;}
+      hr {margin: 10px 0;}
+        
+        .leaflet-popup-content-wrapper {
+        border-radius: 0;
+        background: white;
+        color: black;
+        font-size: 20px;
+    }
+
+    #map {
+        height: 700px;
+        width: 100%;
+        border: solid 2px black;
+    }
+    #descrizione {
+      margin-left: 10px;
+    }
+      
+    </style>
+      
+  </head>
+  <body>
+<div class="container">  
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <!-- Brand/logo -->
+  <a class="navbar-brand" target="_blank" href="https://www.facebook.com/pontedera.europa/">
+    <img src="../css/images/icons/italiaViva.png" alt="logo" style="width:30px;">
+  </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <!-- Links -->
+    <ul class="navbar-nav mx-auto">
+      <li class="nav-item text-center">
+        <a class="nav-link" href="../index.html">Comuni</a>
+      </li>
+      <li class="nav-item text-center">
+        <a class="nav-link" href="a_GDP.html">Residenti</a>
+      </li>
+
+      <li class="nav-item text-center">
+        <a class="nav-link active" href="c_atlanteSegnalazioni.html">Segnalazioni</a>
+      </li>
+
+    </ul>
+  </div> 
+</nav>
+</div>
+
+
+<main role="main" class="container" >
+    <h4 class="mt-5 text-center" >
+        Clicca sulla mappa ed inviaci la segnalazione
+    </h4>
+    <br>
+    <!-- Leafet MAP Containner -->
+    <div id="map" class="container"></div>
+
+</main>
+
+
+
+
+
+<!-- Leafet MAP Containner -->
+<!--    <div id="map" class="container"></div>-->
+
+    <!-- <button id="getZoomButton" onclick="getCenterAndZoom();">Get Center and Zoom</button> -->
+   
+    <!-- Adding a checkbox -->
+<!--
+    <label>
+      <input type="checkbox" name="zoom" value="zoom" id="cbZoom" checked>
+      Zoom Control
+    </label>
+-->
+      
+    <!-- Plugins -->
+<!--    <script src="../js/plugins/sidebarV2/leaflet-sidebar.js"></script>-->
+<!--    <script src="../js/plugins/easyPrint/bundle.js"></script>-->
+<!--    <script src="../js/plugins/zoomControl/L.Control.ZoomBar.js"></script>-->
+<!--    <script src="../js/plugins/leaflet-locatecontrol/L.Control.Locate.min.js"></script>-->
+    <script src="../js/plugins/fullScreen/Leaflet.fullscreen.js"></script>
+    <script src="../js/plugins/awesome-markers/leaflet.awesome-markers.js"></script>
+    <!-- <script src="/js/plugins/draw/Leaflet.draw.js"></script> -->
+    <!-- https://cdnjs.com/libraries/leaflet.draw -->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>-->
+            <script src="../data/provinciaPisa.js"></script>
+
+    <script type="text/javascript">
+
+      var map = L.map('map', {
+        center: [43.47253,10.63541],
+        zoomControl: true,
+        zoom: 10,
+//        minZoom: 8,
+//        maxBounds: [
+//        [43.69704,10.61279],
+//        [43.63496,10.85655]
+//        ],
+        drawControl: true,
+//        scrollWheelZoom: false,
+//        doubleClickZoom: false,
+      // measureControl: true,
+        fullscreenControl: {
+          pseudoFullscreen: false
+        },
+
+      });
+
+
+  var formId = '1s8c3xpWBMMxujv5hfwpOctBjrEOkl3SNWniEUqh4rRo';
+  var formLat = '1599012610';
+  var formLng = '531612609';
+  var formText = '2145982373';
+  var gsheet = '1I7zJcmZUiYuj4XdrxlGOmdKHWVR9cucUzxLzplKBq70';
+
+
+      //Add Location Options - override the plugin default popup and circle
+      var locOptions = {
+        drawCircle: false,
+        showPopup: false,
+        follow:true,
+      };
+      //Add Location
+      var loc = L.control.locate(locOptions).addTo(map);
+      //Endable Location at page load and do things once the location is found
+      loc.start();
+      var marker, circle, lat, lng; //create variables used throughout the map
+        
+      function collectData(e) {
+        //console.log(e);
+        lat = e.latlng.lat;
+        lng = e.latlng.lng;
+        var form = '<div id="formdiv"><form role="form" id="projectform"><div class="form-group"><div class="form-group"><label for="description" class="requiredField">Segnalaci il problema</label><textarea class="form-control" rows="3" id="descrip" placeholder="Inserisci il testo."></textarea></div><em class="text-muted">Click sulla mappa per inserire il marcatore.</em><div id="formHelp"></div><hr /><button type="submit" id="submit" class="btn btn-default btn-sm">Invia</button></form></div>';
+        if (e.accuracy) {
+          var radius = (e.accuracy / 2) * 3.28084;
+          circle = L.circle(e.latlng, radius).addTo(map);
+        }
+        marker = L.marker(e.latlng).addTo(map)
+        .bindPopup(form, {maxWidth:400});
+
+        //if you try and open the popup right away the location may not be ready, eventhough it's firing after locationfound
+        setTimeout(function() {
+          marker.openPopup();
+          loc.stop();
+        }, 100);
+        marker.on('popupopen', function() {
+          $('#projectform').submit(function(event) {
+              event.preventDefault();
+              var descrip = $('#descrip').val();
+              //console.log(descrip);
+              if (descrip) {
+                //console.log(descrip);
+                $('#formdiv').html('<iframe src="https://docs.google.com/forms/d/' + formId + '/formResponse?entry.' + formLat + '=' + lat + '&entry.' + formLng + '=' + lng + '&entry.'+ formText + '=' + descrip + '&submit=Submit" seamless scrolling="no" style="overflow:hidden;height:375px;border:lightgray solid thin;"></iframe>');
+              } else {
+                $('#formHelp').html('<span style="color:red;">Please enter a description of your issue.</span>')
+              }
+            });
+        });
+        if (marker) {
+          marker.on('popupclose', function() {
+            map.removeLayer(marker);
+            if (map.hasLayer(circle)) {
+              map.removeLayer(circle);
+            }
+          });
+        }
+      }
+      map.on('locationfound', function(e) {
+        collectData(e);
+      });
+
+    setTimeout(function() {
+      if(lat) {
+        return false;
+      }else{
+        console.log('no loc');
+        loc.stop();
+        map.setView([43.66473, 10.63862], 14);
+        alert('No location found')
+      }
+      }, 1000);
+      map.on('click', function(e) {
+        collectData(e);
+      });
+  /*    map.on('stopfollowing', function() {
+        if (marker) {
+          marker.closePopup();
+        }
+      });*/
+
+      //Add form response points
+      //Add an empty geojson layer for the google sheet points and create the popup
+      var gps = new L.geoJson(null, {
+        onEachFeature: function(feature, layer) {
+          layer.bindPopup(feature.properties.Description)
+        }
+      });
+      //Grab the google sheet data using tabletop - published to the web not just shared - and use geojson.min.js to convert into proper geojson format
+      var tabletop = Tabletop.init( {
+        key: gsheet,
+        simpleSheet: true,
+        parseNumbers: true,
+        callback: function(data, tabletop) {
+          var gpsData = GeoJSON.parse(data, {Point: ['Latitude', 'Longitude']});
+          //add that data to the geojson layer created earlier
+          gps.addData(gpsData);
+          gps.addTo(map);
+        },
+      });
+
+    
+    </script>
+       <!--c_ Atlante Segnalazioni JS-->     
+        <script src="../js/c_atlanteSegnalazioni/layers.js"></script>
+<!--        <script src="../js/c_atlanteSegnalazioni/markers.js"></script>-->
+<!--        <script src="../js/c_atlanteSegnalazioni/editableLayers.js"></script>-->
+<!--        <script src="../js/c_atlanteSegnalazioni/js/sidebar.js"></script>-->
+       <!--base JS-->
+        <script src="../js/base/scalebar.js"></script>
+<!--        <script src="../js/__base/print.js"></script>-->
+<!--        <script src="../js/base/zoom.js"></script>-->
+<!--        <script src="../js/__base/locateControl.js"></script>-->
+        <script src="../js/base/showCoordinates.js"></script>
+        <script src="../js/base/showUrl.js"></script>
+
+
+  </body>
+</html>
